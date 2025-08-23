@@ -33,7 +33,7 @@ body {
 header {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     color: white;
-    padding: 1rem;
+    padding: 1rem 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -45,6 +45,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .logo {
@@ -587,3 +589,4 @@ footer {
             text-align: center;
             box-shadow: #23d5ab 0px 0px 10px;
         }
+        
