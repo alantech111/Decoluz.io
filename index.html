@@ -8,17 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="container header-content">
             <div class="logo">
                 <i class="fas fa-birthday-cake"></i>
                 <span>DecoLUZ</span>
             </div>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <nav>
-                <ul>
+                <ul id="menu">
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#presupuesto">Presupuesto</a></li>
                     <li><a href="#galeria">Galería</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
@@ -26,15 +31,50 @@
         </div>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="container hero-content">
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
             <h1>Transformamos tus sueños en celebración</h1>
             <p>Servicios profesionales de decoración para cumpleaños y eventos especiales</p>
             <a href="#presupuesto" class="btn">Solicitar Presupuesto</a>
         </div>
     </section>
 
-    <section id="galeria" class="gallery">
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Servicios</h2>
+                <p>Ofrecemos una amplia variedad de servicios para hacer de tu evento algo especial</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-birthday-cake"></i>
+                    <h3>Decoración de Cumpleaños</h3>
+                    <p>Transformamos tu espacio con temáticas únicas y personalizadas.</p>
+                    <div class="price">Desde <span>$200</span></div>
+                    <button class="add-service">Añadir al presupuesto</button>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-ring"></i>
+                    <h3>Eventos Especiales</h3>
+                    <p>Bodas, aniversarios y celebraciones corporativas.</p>
+                    <div class="price">Desde <span>$500</span></div>
+                    <button class="add-service">Añadir al presupuesto</button>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Mesas de Regalos</h3>
+                    <p>Diseño y decoración de mesas de regalos temáticas.</p>
+                    <div class="price">Desde <span>$150</span></div>
+                    <button class="add-service">Añadir al presupuesto</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+     <section id="galeria" class="gallery">
         <div class="container">
             <div class="section-title">
                 <h2>Nuestra Galería</h2>
@@ -46,118 +86,51 @@
         </div>
     </section>
 
-    <section id="servicios" class="services">
+    <!-- Budget Section -->
+    <section class="budget" id="presupuesto">
         <div class="container">
             <div class="section-title">
-                <h2>Nuestros Servicios</h2>
-                <p>Ofrecemos una amplia gama de servicios para hacer de tu celebración un evento inolvidable</p>
+                <h2>Solicita tu Presupuesto</h2>
+                <p>Selecciona los servicios que necesitas para tu evento</p>
             </div>
-            <div class="services-grid">
-                <div class="service-card" data-id="1" data-name="Decoración Temática" data-price="1500">
-                    <i class="fas fa-palette"></i>
-                    <h3>Decoración Temática</h3>
-                    <p>Creamos ambientes únicos según la temática que elijas: superhéroes, princesas, animales, etc.</p>
-                    <p class="price">Desde: <span>1500UYU</span></p>
-                    <button class="add-service">Añadir al presupuesto</button>
-                </div>
-                <div class="service-card" data-id="2" data-name="Arreglos con Globos" data-price="120">
-                    <i class="fas fa-ballon"></i>
-                    <h3>Arreglos con Globos</h3>
-                    <p>Decoración artística con globos de latex, metalizados y figuras personalizadas, (El cliente compra los globos a criterio)</p>
-                    <p class="price">Desde: <span>0UYU</span></p>
-                    <button class="add-service">Añadir al presupuesto</button>
-                </div>
-                <div class="service-card" data-id="3" data-name="Mesas Dulces" data-price="180">
-                    <i class="fas fa-utensils"></i>
-                    <h3>Mesas Dulces</h3>
-                    <p>Decoramos mesas de dulces (Los dulces seran abonados por el cliente a gusto y preferencia).</p>
-                    <p class="price">Desde: <span>0UYU</span></p>
-                    <button class="add-service">Añadir al presupuesto</button>
-                </div>
-
-                <div class="service-card" data-id="5" data-name="Detalles Personalizados" data-price="80">
-                    <i class="fas fa-gifts"></i>
-                    <h3>Detalles Personalizados</h3>
-                    <p>Se realiza decoración personalizada a gusto y preferencia del cliente</p>
-                    <p class="price">Desde: <span>80UYU</span></p>
-                    <button class="add-service">Añadir al presupuesto</button>
-                </div>
-                <div class="service-card" data-id="6" data-name="Montaje y Desmontaje" data-price="100">
-                    <i class="fas fa-truck"></i>
-                    <h3>Montaje y Desmontaje</h3>
-                    <p>Nos encargamos de todo el proceso de instalación y recogida posterior al evento.</p>
-                    <p class="price">Desde: <span>100UYU</span></p>
-                    <button class="add-service">Añadir al presupuesto</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="presupuesto" class="budget">
-        <div class="container">
-            <div class="section-title">
-                <h2>Calcula tu Presupuesto</h2>
-                <p>Selecciona los servicios que deseas incluir en tu evento</p>
-            </div>
-            
             <div class="budget-content">
                 <div class="budget-form">
                     <h3>Servicios Seleccionados</h3>
-                    <div class="selected-services" id="selected-services">
-                        <p class="empty-message">No hay servicios seleccionados aún.</p>
+                    <div class="selected-services">
+                        <div class="empty-message">Selecciona servicios de la lista</div>
                     </div>
-                    
                     <div class="budget-summary">
                         <div class="summary-item">
                             <span>Subtotal:</span>
-                            <span id="subtotal">0UYU</span>
-                        </div>
-                        <div class="summary-item">
-                            <span>IVA (21%):</span>
-                            <span id="tax">0UYU</span>
+                            <span>$0</span>
                         </div>
                         <div class="summary-item total">
                             <span>Total:</span>
-                            <span id="total">0UYU</span>
+                            <span>$0</span>
                         </div>
                     </div>
-                    
-                    <button id="reset-budget" class="btn-secondary">Reiniciar Presupuesto</button>
+                     <button id="reset-budget" class="btn-secondary">Reiniciar Presupuesto</button>
                   <button class="btn" onclick="window.open('https://wa.me/+59897307169?text=MasDetalles', '_blank')">
     Solicitar Presupuesto
 </button>
-                
+                </div>
                 <div class="budget-info">
                     <h3>¿Cómo funciona?</h3>
-                    <p>Selecciona los servicios que necesitas para tu evento haciendo clic en "Añadir al presupuesto".</p>
-                    <p>El sistema calculará automáticamente el precio total de todos los servicios seleccionados.</p>
-                    <p>Puedes solicitar un presupuesto detallado con descripción personalizada de cada servicio.</p>
-                    
-                    <div class="additional-options">
-                        <h4>Opciones Adicionales</h4>
-                        <div class="option">
-                            <input type="checkbox" id="urgent" name="urgent">
-                            <label for="urgent">Servicio urgente (+0UYU)</label>
-                        </div>
-                        <div class="option">
-                            <input type="checkbox" id="setup" name="setup">
-                            <label for="setup">Montaje express (+0UYU)</label>
-                        </div>
-                    </div>
+                    <p>Selecciona los servicios que necesitas para tu evento y te enviaremos un presupuesto personalizado en menos de 24 horas.</p>
+                    <p>También puedes contactarnos directamente por WhatsApp para una atención más personalizada.</p>
                 </div>
             </div>
         </div>
     </section>
-    <div id="maps">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d589.7871452738195!2d-58.035801554807904!3d-33.257592256395874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a53e6bd2ef0415%3A0xbef69b03902f204!2sDon%20Bosco%20439%2C%2075000%20Mercedes%2C%20Departamento%20de%20Soriano!5e0!3m2!1ses!2suy!4v1755898141581!5m2!1ses!2suy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
-    <section id="contacto" class="contact">
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
         <div class="container">
             <div class="section-title">
                 <h2>Contacto</h2>
-                <p>¿Listo para comenzar a planificar tu evento? ¡Contáctanos!</p>
+                <p>Estamos aquí para ayudarte a crear el evento de tus sueños</p>
             </div>
-            <div class="contact-content">
+           <div class="contact-content">
                 <div class="contact-info">
                     <div class="info-item">
                         <i class="fas fa-map-marker-alt"></i>
@@ -175,44 +148,62 @@
                         <i class="fas fa-clock"></i>
                         <p>Lunes a Sábado: 9:00 AM - 6:00 PM</p>
                     </div>
-
-                    <div class="floating-whatsapp" onclick="openFloatingWhatsApp()">
-    <div class="whatsapp-icon">
-        <i class="fab fa-whatsapp"></i>
-        <span class="whatsapp-tooltip">Chatear con nosotros</span>
-    </div>
+                    </div>
                 </div>
-        </div>
+                <div class="contact-form">
+                    <input type="text" placeholder="Nombre">
+                    <input type="email" placeholder="Email">
+                    <input type="tel" placeholder="Teléfono">
+                    <textarea placeholder="Mensaje" rows="5"></textarea>
+                    <button type="submit">Enviar Mensaje</button>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Map Section -->
+    <div id="maps">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3968.0370359227645!2d-75.5957641242492!3d6.108861593924812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4683b2f6f4b5a5%3A0x5c4ee9e5f5b5b5b5!2sMedell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1691523456789!5m2!1ses!2sco" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Síguenos</h3>
-                    <div class="social-icons">
-                        <a href="https://www.facebook.com/luz.espinosa.77/"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/luqui0204/"><i class="fab fa-instagram"></i></a>
-                    </div>
-                    <h3>LuzDeco</h3>
-                    <p>Haciendo de tus celebraciones momentos inolvidables desde 2015.</p>
+                    <h3>DecoLUZ</h3>
+                    <p>Transformamos tus sueños en celebración con nuestros servicios de decoración para eventos especiales.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Enlaces Rápidos</h3>
                     <ul>
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#presupuesto">Presupuesto</a></li>
+                        <li><a href="#galeria">Galería</a></li>
                         <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </div>
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                         <a href="https://www.facebook.com/luz.espinosa.77/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/luqui0204/"><i class="fab fa-instagram"></i></a>
+
+                    </div>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 CelebraPlus. Todos los derechos reservados.</p>
+                <p>&copy; 2025 DecoLUZ. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
+
+    <!-- WhatsApp Float -->
+    <div class="floating-whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">¡Contáctanos por WhatsApp!</span>
+    </div>
+
 
     <script src="script.js"></script>
 </body>
