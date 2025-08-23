@@ -203,5 +203,5 @@ document.addEventListener('DOMContentLoaded', function() {
         // WhatsApp flotante
         const whatsappButton = document.querySelector('.floating-whatsapp');
         whatsappButton.addEventListener('click', () => {
-            window.open('https://wa.me/1234567890?text=Hola,%20me%20interesan%20sus%20servicios%20de%20decoración', '_blank');
+            window.open('https://wa.me/+59897307169?text=Hola,%20me%20interesan%20sus%20servicios%20de%20decoración', '_blank');
         });
