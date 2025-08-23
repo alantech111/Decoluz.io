@@ -300,3 +300,131 @@ function requestBudget() {
     
     window.location.href = mailtoLink;
 }
+
+// Función para detectar y adaptar a pantallas expansivas
+function setupExpansiveScreens() {
+    // Definir umbral para considerar una pantalla como "expansiva"
+    const EXPANSIVE_SCREEN_THRESHOLD = 1920; // píxeles (Full HD es 1920x1080)
+    const ULTRAWIDE_THRESHOLD = 2560; // píxeles (QHD ultrawide es 2560x1080)
+    const DUAL_SCREEN_THRESHOLD = 3840; // píxeles (4K es 3840x2160)
+    
+    // Elementos que queremos ajustar
+    const container = document.querySelector('.container');
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const servicesGrid = document.querySelector('.services-grid');
+    
+    // Función para aplicar ajustes según el ancho de pantalla
+    function adjustForExpansiveScreen() {
+        const screenWidth = window.innerWidth;
+        
+        if (screenWidth >= DUAL_SCREEN_THRESHOLD) {
+            // Pantalla 4K o dual screen
+            console.log('Modo: Pantalla 4K/Dual');
+            
+            // Ajustar contenedor principal
+            if (container) {
+                container.style.maxWidth = '90%';
+            }
+            
+            // Ajustar galería para más columnas
+            if (galleryGrid) {
+                galleryGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
+                galleryGrid.style.gap = '2rem';
+            }
+            
+            // Ajustar servicios para más columnas
+            if (servicesGrid) {
+                servicesGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+                servicesGrid.style.gap = '2.5rem';
+            }
+            
+            // Añadir clases específicas para CSS
+            document.documentElement.classList.add('expansive-screen', 'dual-screen');
+            document.documentElement.classList.remove('ultrawide-screen');
+            
+        } else if (screenWidth >= ULTRAWIDE_THRESHOLD) {
+            // Pantalla ultrawide
+            console.log('Modo: Ultrawide');
+            
+            // Ajustar contenedor principal
+            if (container) {
+                container.style.maxWidth = '85%';
+            }
+            
+            // Ajustar galería
+            if (galleryGrid) {
+                galleryGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+                galleryGrid.style.gap = '1.8rem';
+            }
+            
+            // Ajustar servicios
+            if (servicesGrid) {
+                servicesGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(320px, 1fr))';
+                servicesGrid.style.gap = '2rem';
+            }
+            
+            // Añadir clases específicas para CSS
+            document.documentElement.classList.add('expansive-screen', 'ultrawide-screen');
+            document.documentElement.classList.remove('dual-screen');
+            
+        } else if (screenWidth >= EXPANSIVE_SCREEN_THRESHOLD) {
+            // Pantalla expansiva estándar
+            console.log('Modo: Expansiva estándar');
+            
+            // Ajustar contenedor principal
+            if (container) {
+                container.style.maxWidth = '95%';
+            }
+            
+            // Añadir clases específicas para CSS
+            document.documentElement.classList.add('expansive-screen');
+            document.documentElement.classList.remove('ultrawide-screen', 'dual-screen');
+            
+        } else {
+            // Pantalla normal
+            console.log('Modo: Pantalla normal');
+            document.documentElement.classList.remove('expansive-screen', 'ultrawide-screen', 'dual-screen');
+            
+            // Restablecer estilos si es necesario
+            if (container) {
+                container.style.maxWidth = '';
+            }
+            if (galleryGrid) {
+                galleryGrid.style.gridTemplateColumns = '';
+                galleryGrid.style.gap = '';
+            }
+            if (servicesGrid) {
+                servicesGrid.style.gridTemplateColumns = '';
+                servicesGrid.style.gap = '';
+            }
+        }
+    }
+    
+    // Ejecutar al cargar y al redimensionar
+    window.addEventListener('load', adjustForExpansiveScreen);
+    window.addEventListener('resize', adjustForExpansiveScreen);
+    
+    // También devolver la función para poder llamarla manualmente si es necesario
+    return adjustForExpansiveScreen;
+}
+
+// Inicializar cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', function() {
+    const adjustExpansiveScreen = setupExpansiveScreens();
+    
+    // También puedes llamarla manualmente si es necesario
+    // adjustExpansiveScreen();
+});
+
+// Opcional: Función para detectar relación de aspecto ultrawide
+function isUltrawideAspectRatio() {
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    // Relación de aspecto típica de ultrawide es 21:9 (2.33) o mayor
+    return aspectRatio >= 2.0;
+}
+
+// Opcional: Función para detectar si es una pantalla dual/múltiple
+function isMultiScreenSetup() {
+    // Esto es una aproximación, no hay forma exacta de detectar múltiples pantallas
+    return window.innerWidth > 3000 && window.screen.width < window.innerWidth;
+}
