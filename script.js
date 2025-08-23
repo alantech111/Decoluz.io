@@ -120,311 +120,88 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-function openFloatingWhatsApp() {
-            const phoneNumber = "+59897307169"; // Tu número aquí
-            const message = "Hola, quisiera más información sobre sus servicios de decoración de fiestas.";
-            const encodedMessage = encodeURIComponent(message);
-            
-            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-        }
-
-        // Datos de los servicios
-const services = [
-    { id: 1, name: "Decoración Temática", price: 250 },
-    { id: 2, name: "Arreglos con Globos", price: 120 },
-    { id: 3, name: "Mesas Dulces", price: 180 },
-    { id: 5, name: "Detalles Personalizados", price: 80 },
-    { id: 6, name: "Montaje y Desmontaje", price: 100 }
-];
-
-// Estado de la aplicación
-let selectedServices = [];
-let subtotal = 0;
-let tax = 0;
-let total = 0;
-
-// Elementos del DOM
-const selectedServicesContainer = document.getElementById('selected-services');
-const subtotalElement = document.getElementById('subtotal');
-const taxElement = document.getElementById('tax');
-const totalElement = document.getElementById('total');
-const resetButton = document.getElementById('reset-budget');
-const requestButton = document.getElementById('request-budget');
-const urgentCheckbox = document.getElementById('urgent');
-const setupCheckbox = document.getElementById('setup');
-
-// Inicialización
-document.addEventListener('DOMContentLoaded', function() {
-    // Añadir event listeners a los botones de servicios
-    document.querySelectorAll('.add-service').forEach(button => {
-        button.addEventListener('click', function() {
-            const serviceCard = this.closest('.service-card');
-            const serviceId = parseInt(serviceCard.dataset.id);
-            const serviceName = serviceCard.dataset.name;
-            const servicePrice = parseFloat(serviceCard.dataset.price);
-            
-            addService(serviceId, serviceName, servicePrice);
-        });
-    });
-    
-    // Event listeners para los botones de presupuesto
-    resetButton.addEventListener('click', resetBudget);
-    requestButton.addEventListener('click', requestBudget);
-    
-    // Event listeners para las opciones adicionales
-    urgentCheckbox.addEventListener('change', updateBudget);
-    setupCheckbox.addEventListener('change', updateBudget);
-});
-
-// Función para añadir un servicio al presupuesto
-function addService(id, name, price) {
-    // Verificar si el servicio ya está seleccionado
-    const existingService = selectedServices.find(service => service.id === id);
-    
-    if (existingService) {
-        alert('Este servicio ya ha sido añadido al presupuesto.');
-        return;
-    }
-    
-    // Añadir el servicio a la lista
-    selectedServices.push({ id, name, price });
-    
-    // Actualizar la interfaz
-    updateSelectedServicesList();
-    updateBudget();
-}
-
-// Función para eliminar un servicio del presupuesto
-function removeService(id) {
-    selectedServices = selectedServices.filter(service => service.id !== id);
-    updateSelectedServicesList();
-    updateBudget();
-}
-
-// Función para actualizar la lista de servicios seleccionados
-function updateSelectedServicesList() {
-    // Limpiar el contenedor
-    selectedServicesContainer.innerHTML = '';
-    
-    if (selectedServices.length === 0) {
-        selectedServicesContainer.innerHTML = '<p class="empty-message">No hay servicios seleccionados aún.</p>';
-        return;
-    }
-    
-    // Añadir cada servicio a la lista
-    selectedServices.forEach(service => {
-        const serviceElement = document.createElement('div');
-        serviceElement.className = 'service-item';
-        serviceElement.innerHTML = `
-            <div class="name">${service.name}</div>
-            <div class="price">${service.price}UYU</div>
-            <button class="remove-service" data-id="${service.id}">&times;</button>
-        `;
-        selectedServicesContainer.appendChild(serviceElement);
-    });
-    
-    // Añadir event listeners a los botones de eliminar
-    document.querySelectorAll('.remove-service').forEach(button => {
-        button.addEventListener('click', function() {
-            const serviceId = parseInt(this.dataset.id);
-            removeService(serviceId);
-        });
-    });
-}
-
-// Función para actualizar el presupuesto
-function updateBudget() {
-    // Calcular subtotal
-    subtotal = selectedServices.reduce((sum, service) => sum + service.price, 0);
-    
-    // Aplicar cargos adicionales
-    if (urgentCheckbox.checked) {
-        subtotal += subtotal * 0; // +15% por servicio urgente
-    }
-    
-    if (setupCheckbox.checked) {
-        subtotal += 0; // +50€ por montaje express
-    }
-    
-    // Calcular impuestos y total
-    tax = subtotal * 0.00; // IVA 21%
-    total = subtotal + tax;
-    
-    // Actualizar la interfaz
-    subtotalElement.textContent = `${subtotal.toFixed(2)}UYU`;
-    taxElement.textContent = `${tax.toFixed(2)}UYU`;
-    totalElement.textContent = `${total.toFixed(2)}UYU`;
-}
-
-// Función para reiniciar el presupuesto
-function resetBudget() {
-    selectedServices = [];
-    urgentCheckbox.checked = false;
-    setupCheckbox.checked = false;
-    updateSelectedServicesList();
-    updateBudget();
-}
-
-// Función para solicitar el presupuesto
-function requestBudget() {
-    if (selectedServices.length === 0) {
-        alert('Por favor, selecciona al menos un servicio para solicitar un presupuesto.');
-        return;
-    }
-    
-    // Crear mensaje con los detalles del presupuesto
-    let message = "Hola, me gustaría solicitar un presupuesto para los siguientes servicios:\n\n";
-    
-    selectedServices.forEach(service => {
-        message += `- ${service.name}: ${service.price}€\n`;
-    });
-    
-    if (urgentCheckbox.checked) {
-        message += "\n* Incluye recargo por servicio urgente (+0%)\n";
-    }
-    
-    if (setupCheckbox.checked) {
-        message += "* Incluye montaje express (+00.0UYU)\n";
-    }
-    
-    message += `\nSubtotal: ${subtotal.toFixed(2)}UYU`;
-    message += `\nIVA (21%): ${tax.toFixed(2)}UYU`;
-    message += `\nTotal: ${total.toFixed(2)}UYU`;
-    
-    message += "\n\nPor favor, envíenme más información.";
-    
-    // Abrir cliente de correo (en un caso real, esto se enviaría a un backend)
-    const email = "info@celebraplus.com";
-    const subject = "Solicitud de Presupuesto para Fiesta";
-    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-    
-    window.location.href = mailtoLink;
-}
-
-// Función para detectar y adaptar a pantallas expansivas
-function setupExpansiveScreens() {
-    // Definir umbral para considerar una pantalla como "expansiva"
-    const EXPANSIVE_SCREEN_THRESHOLD = 1920; // píxeles (Full HD es 1920x1080)
-    const ULTRAWIDE_THRESHOLD = 2560; // píxeles (QHD ultrawide es 2560x1080)
-    const DUAL_SCREEN_THRESHOLD = 3840; // píxeles (4K es 3840x2160)
-    
-    // Elementos que queremos ajustar
-    const container = document.querySelector('.container');
-    const galleryGrid = document.querySelector('.gallery-grid');
-    const servicesGrid = document.querySelector('.services-grid');
-    
-    // Función para aplicar ajustes según el ancho de pantalla
-    function adjustForExpansiveScreen() {
-        const screenWidth = window.innerWidth;
+// Menú móvil
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
         
-        if (screenWidth >= DUAL_SCREEN_THRESHOLD) {
-            // Pantalla 4K o dual screen
-            console.log('Modo: Pantalla 4K/Dual');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const menuItems = document.querySelectorAll('nav ul li a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                menu.classList.remove('active');
+            });
+        });
+        
+        // Sistema de presupuesto (simplificado)
+        const addServiceButtons = document.querySelectorAll('.add-service');
+        const selectedServices = document.querySelector('.selected-services');
+        const subtotalElement = document.querySelector('.summary-item:first-child span:last-child');
+        const totalElement = document.querySelector('.summary-item.total span:last-child');
+        
+        let services = [];
+        let subtotal = 0;
+        
+        addServiceButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const serviceCard = button.closest('.service-card');
+                const serviceName = serviceCard.querySelector('h3').textContent;
+                const servicePrice = parseInt(serviceCard.querySelector('.price span').textContent.replace('$', ''));
+                
+                // Añadir servicio
+                services.push({
+                    name: serviceName,
+                    price: servicePrice
+                });
+                
+                // Actualizar interfaz
+                updateBudget();
+            });
+        });
+        
+        function updateBudget() {
+            // Calcular subtotal
+            subtotal = services.reduce((total, service) => total + service.price, 0);
             
-            // Ajustar contenedor principal
-            if (container) {
-                container.style.maxWidth = '90%';
+            // Actualizar HTML
+            selectedServices.innerHTML = '';
+            
+            if (services.length === 0) {
+                selectedServices.innerHTML = '<div class="empty-message">Selecciona servicios de la lista</div>';
+            } else {
+                services.forEach(service => {
+                    const serviceElement = document.createElement('div');
+                    serviceElement.className = 'service-item';
+                    serviceElement.innerHTML = `
+                        <div class="name">${service.name}</div>
+                        <div class="price">$${service.price}</div>
+                        <button class="remove-service">&times;</button>
+                    `;
+                    selectedServices.appendChild(serviceElement);
+                    
+                    // Añadir evento para eliminar servicio
+                    const removeButton = serviceElement.querySelector('.remove-service');
+                    removeButton.addEventListener('click', () => {
+                        const index = services.findIndex(s => s.name === service.name && s.price === service.price);
+                        if (index !== -1) {
+                            services.splice(index, 1);
+                            updateBudget();
+                        }
+                    });
+                });
             }
             
-            // Ajustar galería para más columnas
-            if (galleryGrid) {
-                galleryGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
-                galleryGrid.style.gap = '2rem';
-            }
-            
-            // Ajustar servicios para más columnas
-            if (servicesGrid) {
-                servicesGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
-                servicesGrid.style.gap = '2.5rem';
-            }
-            
-            // Añadir clases específicas para CSS
-            document.documentElement.classList.add('expansive-screen', 'dual-screen');
-            document.documentElement.classList.remove('ultrawide-screen');
-            
-        } else if (screenWidth >= ULTRAWIDE_THRESHOLD) {
-            // Pantalla ultrawide
-            console.log('Modo: Ultrawide');
-            
-            // Ajustar contenedor principal
-            if (container) {
-                container.style.maxWidth = '85%';
-            }
-            
-            // Ajustar galería
-            if (galleryGrid) {
-                galleryGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
-                galleryGrid.style.gap = '1.8rem';
-            }
-            
-            // Ajustar servicios
-            if (servicesGrid) {
-                servicesGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(320px, 1fr))';
-                servicesGrid.style.gap = '2rem';
-            }
-            
-            // Añadir clases específicas para CSS
-            document.documentElement.classList.add('expansive-screen', 'ultrawide-screen');
-            document.documentElement.classList.remove('dual-screen');
-            
-        } else if (screenWidth >= EXPANSIVE_SCREEN_THRESHOLD) {
-            // Pantalla expansiva estándar
-            console.log('Modo: Expansiva estándar');
-            
-            // Ajustar contenedor principal
-            if (container) {
-                container.style.maxWidth = '95%';
-            }
-            
-            // Añadir clases específicas para CSS
-            document.documentElement.classList.add('expansive-screen');
-            document.documentElement.classList.remove('ultrawide-screen', 'dual-screen');
-            
-        } else {
-            // Pantalla normal
-            console.log('Modo: Pantalla normal');
-            document.documentElement.classList.remove('expansive-screen', 'ultrawide-screen', 'dual-screen');
-            
-            // Restablecer estilos si es necesario
-            if (container) {
-                container.style.maxWidth = '';
-            }
-            if (galleryGrid) {
-                galleryGrid.style.gridTemplateColumns = '';
-                galleryGrid.style.gap = '';
-            }
-            if (servicesGrid) {
-                servicesGrid.style.gridTemplateColumns = '';
-                servicesGrid.style.gap = '';
-            }
+            subtotalElement.textContent = `$${subtotal}`;
+            totalElement.textContent = `$${subtotal}`;
         }
-    }
-    
-    // Ejecutar al cargar y al redimensionar
-    window.addEventListener('load', adjustForExpansiveScreen);
-    window.addEventListener('resize', adjustForExpansiveScreen);
-    
-    // También devolver la función para poder llamarla manualmente si es necesario
-    return adjustForExpansiveScreen;
-}
-
-// Inicializar cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    const adjustExpansiveScreen = setupExpansiveScreens();
-    
-    // También puedes llamarla manualmente si es necesario
-    // adjustExpansiveScreen();
-});
-
-// Opcional: Función para detectar relación de aspecto ultrawide
-function isUltrawideAspectRatio() {
-    const aspectRatio = window.innerWidth / window.innerHeight;
-    // Relación de aspecto típica de ultrawide es 21:9 (2.33) o mayor
-    return aspectRatio >= 2.0;
-}
-
-// Opcional: Función para detectar si es una pantalla dual/múltiple
-function isMultiScreenSetup() {
-    // Esto es una aproximación, no hay forma exacta de detectar múltiples pantallas
-    return window.innerWidth > 3000 && window.screen.width < window.innerWidth;
-}
+        
+        // WhatsApp flotante
+        const whatsappButton = document.querySelector('.floating-whatsapp');
+        whatsappButton.addEventListener('click', () => {
+            window.open('https://wa.me/1234567890?text=Hola,%20me%20interesan%20sus%20servicios%20de%20decoración', '_blank');
+        });
