@@ -15,13 +15,15 @@ const galleryImages = [
     },
     {
         id: 3,
-        url: "515681331_23953826117579528_7441618500606789750_n.jpg",
-        title: "Decoracion XV"
+        url: "WhatsApp Image 2025-08-26 at 17.47.45.jpeg",
+        link: "quince.html",
+        title: "Decoracion XV",
     },
     {
         id: 4,
-        url: "518946644_24032638806364925_3845840233688127222_n.jpg",
-        title: "Compromisos"
+        url: "WhatsApp Image 2025-08-26 at 18.15.40 (2).jpeg",
+        title: "Compromisos",
+        link: "compromisos.html",
     },
     {
         id: 5,
@@ -34,7 +36,6 @@ const galleryImages = [
         title: "Al aire libre"
     }
 ];
-
 
 
 
